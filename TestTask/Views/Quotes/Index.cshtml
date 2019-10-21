@@ -1,0 +1,58 @@
+﻿@model TestTask.ViewModels.Quotes.IndexVM
+
+@{
+    ViewBag.Title = "Quote Game";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@if (TestTask.Models.AuthenticationManager.LoggedUser != null && TestTask.Models.AuthenticationManager.LoggedUser.IsAdmin)
+{
+    Html.RenderPartial("/Views/Shared/IndexFilterPartial.cshtml", Model.Filter);
+
+    <a href="@Url.Action("Edit", "Quotes")">Add new Quote</a>
+
+
+    <table>
+
+        <tr>
+
+            <td><a href="@Url.Action("Index", "Quotes")?OrderBy.Text=Text">Text</a></td>
+            <td><a href="@Url.Action("Index", "Quotes")?OrderBy.AuthorName=authorname">Author</a></td>
+
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+
+                <td>@item.Text</td>
+                <td>@item.Author.Name</td>
+
+                @if (TestTask.Models.AuthenticationManager.LoggedUser.IsAdmin)
+                {
+
+                    <td><a href="@Url.Action("Edit", "Quotes", new { Id = item.Id })">edit</a></td>
+                    <td><a href="@Url.Action("Delete", "Quotes", new { Id = item.Id })">delete</a></td>
+                }
+
+
+            </tr>
+
+        }
+    </table>
+
+    Html.RenderPartial("/Views/Shared/PagerPartial.cshtml", Model.Pager);
+
+}
+
+
+
+
+
+
+
+
+

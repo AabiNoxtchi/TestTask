@@ -1,0 +1,31 @@
+﻿@model TestTask.ViewModels.Home.LoginVM
+
+@{
+    ViewBag.Title = "Quote Game";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using(Html.BeginForm("Login", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Login</legend>
+        @Html.ValidationMessage("authenticationFailed", new { style = "color: red;" })
+        <table>
+            <tr>
+                <td>@Html.LabelFor(model => model.UserName)</td>
+                <td>@Html.TextBoxFor(model => model.UserName) @Html.ValidationMessageFor(model => model.UserName, null, new { style = "color: red;" })</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.Password)</td>
+                <td>@Html.PasswordFor(model => model.Password) @Html.ValidationMessageFor(model => model.Password, null, new { style = "color: red;" })</td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Login" /></td>
+            </tr>
+        </table>
+    </fieldset>
+}

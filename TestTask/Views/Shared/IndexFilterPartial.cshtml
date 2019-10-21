@@ -1,0 +1,40 @@
+﻿@model TestTask.ViewModels.Shared.IFilterVM
+
+<form action="/@this.ViewContext.RouteData.Values["controller"]/@this.ViewContext.RouteData.Values["action"]" method="get">
+    @foreach (var pi in Model.GetType().GetProperties())
+    {
+        //Get Skip Attribute
+        if (pi.GetCustomAttributes(true).Where(a => a is SkipAttribute).FirstOrDefault() != null)
+        {
+            continue;
+        }
+
+        //Get Label
+        Attribute attribute = (Attribute)pi.GetCustomAttributes(true).Where(a => a is DisplayNameAttribute).FirstOrDefault();
+        String label = attribute == null ? pi.Name : ((DisplayNameAttribute)attribute).DisplayName;
+
+        if (pi.GetCustomAttributes(true).Where(a => a is HiddenAttribute).FirstOrDefault() != null)
+        {
+            <input id="@(Model.Prefix)_@(pi.Name)" type="hidden" name="@(Model.Prefix).@(pi.Name)" value="@pi.GetValue(Model)" />
+        }
+        else if (pi.GetCustomAttributes(true).Where(a => a is DropDownFilter).FirstOrDefault() != null)
+        {
+            DropDownFilter dropDownFilter = (DropDownFilter)pi.GetCustomAttributes(true).Where(a => a is DropDownFilter).FirstOrDefault();
+            <label for="@(Model.Prefix)_@(pi.Name)">@label</label>
+            <select id="@(Model.Prefix)_@(pi.Name)" name="@(Model.Prefix).@dropDownFilter.TargetModelProperty">
+                @foreach(var obj in (IEnumerable<object>)pi.GetValue(Model))
+                {
+                    <option value="@(obj.GetType().GetProperty(dropDownFilter.DataProperty).GetValue(obj))">
+                        @(obj.GetType().GetProperty(dropDownFilter.DisplayProperty).GetValue(obj))
+                    </option>
+                }   
+            </select>
+        }
+        else
+        {
+            <label for="@(Model.Prefix)_@(pi.Name)">@label</label>
+            <input id="@(Model.Prefix)_@(pi.Name)" type="text" name="@(Model.Prefix).@(pi.Name)" value="@pi.GetValue(Model)" />
+        }
+    }
+    <input type="submit" value="Search" />
+</form>

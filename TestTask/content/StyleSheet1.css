@@ -1,0 +1,142 @@
+﻿
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.main{
+    width:100%
+}
+
+  .main h1 {
+        margin: 0;
+        font-family: 'Open Sans Condensed', sans-serif;
+        font-weight: bolder;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: .3em;
+        font-size: 3em;
+        color: black;
+    }
+
+.navbar,.navbar ul {
+    width: 100%;
+    display: flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color:black;
+}
+
+.navbar ul{
+    padding:0;
+}
+
+
+.navbar li {
+   
+    text-decoration: none;
+   
+}
+
+.navbar li a {
+    font-size: 1em;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+    letter-spacing: .1em;
+
+}
+
+
+.navbar li a:hover{
+    color: antiquewhite;
+}
+
+.game{
+    width:40%;
+    margin:0 auto;
+    padding:1%;
+    border:4px solid black;
+    padding-bottom:5%;
+    
+}
+
+.game p{
+  text-align:left;
+}
+
+.pink_box{
+    width:95%;
+    height:250px;
+    background-color:deeppink;
+    margin:0 auto;
+    border-radius:4px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+    .pink_box blockquote {
+        font-size:1em;
+        line-height: 1.4em;
+        width: 100%;
+        color: white;
+        margin:5%;
+    }
+
+.options {
+    width: 80%;
+    text-align: left;
+    background-color: darkgray;
+    border-radius: 4px;
+}
+
+.binary_options{
+    margin:0 10%;
+    margin-top:20%;
+    display:flex;
+    justify-content:space-between;
+}
+
+.quoteOptions p,#Details{
+    text-align:center;
+}
+
+.quoteOptions p {
+    color: darkslategrey;
+}
+
+#Yesbtn{
+    background-color:yellowgreen;
+}
+
+#Nobtn{
+    background-color:red;
+}
+
+#Yesbtn,#Nobtn{
+    border-radius:4px;
+    font-size:1.1em;
+    color:white;
+}
+
+.btn {
+    margin: 5% 0;
+    color: white;
+    background-color: deeppink;
+    font-size: 1.1em;
+}
+
+.centered{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}

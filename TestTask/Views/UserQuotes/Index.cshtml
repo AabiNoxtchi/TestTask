@@ -1,0 +1,26 @@
+﻿@model TestTask.ViewModels.UserQuotes.IndexVM
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>User Games</h3>
+<br />
+@{ Html.RenderPartial("/Views/Shared/IndexFilterPartial.cshtml", Model.Filter); }
+<table>
+    <tr>
+        <td><a href="@Url.Action("Index")?OrderBy.UserName=userName">User Name</a></td>
+        <td><a href="@Url.Action("Index")?OrderBy.QuoteText=text">Quote</a></td>
+        <td><a href="@Url.Action("Index")?OrderBy.Score=score">Score</a></td>
+    </tr>
+    @foreach (DataAccess.Entity.UserQuote item in Model.Items)
+    {
+        <tr>
+            <td>@Model.Filter.UsersList.FirstOrDefault(i => i.Value == item.UserId.ToString()).Text</td>
+            <td>@item.Quote.Text</td>
+            <td>@item.Score</td>
+        </tr>
+    }
+
+</table>
+@{ Html.RenderPartial("/Views/Shared/PagerPartial.cshtml", Model.Pager); }
+

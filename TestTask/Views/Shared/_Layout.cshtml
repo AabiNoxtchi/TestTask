@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Quote Game</title>
+    <link href="~/content/StyleSheet1.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+</head>
+<body>
+    <div>
+        <table class="main">
+            <tr>
+                <td>
+                    <h1>Quote Game</h1>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="navbar">
+                        <ul style="list-style:none;">
+
+
+
+                            <li><a href="@Url.Action("Play", "UserQuotes")">Main</a></li>
+
+                            <li><a href="@Url.Action("SetMode", "UserQuotes")">Settings</a></li>
+
+
+                            @if (TestTask.Models.AuthenticationManager.LoggedUser == null)
+                            {
+                                <li><a href="@Url.Action("Login", "Home")">Login</a></li>
+                                <li><a href="@Url.Action("Register", "Home")">Register</a></li>
+                            }
+                            else
+                            {
+
+
+
+
+                                <li><a href="" style=" text-transform: none;">@TestTask.Models.AuthenticationManager.LoggedUser.UserName</a></li>
+
+                                if (TestTask.Models.AuthenticationManager.LoggedUser != null && TestTask.Models.AuthenticationManager.LoggedUser.IsAdmin)
+                                {
+                                    <li><a href="@Url.Action("Index", "Quotes")">Manage Quotes</a></li>
+                                    <li><a href="@Url.Action("Index", "Users")">Manage Users</a></li>
+
+                                }
+                                <li><a href="@Url.Action("Logout", "Home")">Logout</a></li>
+                            }
+
+
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @RenderBody()
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

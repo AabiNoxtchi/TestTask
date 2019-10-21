@@ -1,0 +1,44 @@
+﻿@model TestTask.ViewModels.Shared.PagerVM
+
+@{
+    string pageLink = "?";
+    for (int i = 0; i < this.Request.QueryString.Count; i++)
+    {
+        if (this.Request.QueryString.GetKey(i) != (Model.Prefix + ".Page"))
+        {
+            pageLink += this.Request.QueryString.GetKey(i) + "=" + Url.Encode(this.Request.QueryString[i]) + "&";
+        }
+    }
+}
+<ul style="list-style-type:none;">
+    @for (int i = 0; i < Model.PagesCount; i++)
+    {
+        <li style="float:left; margin:0 5px;">
+            <a href="/@this.ViewContext.RouteData.Values["controller"]/@this.ViewContext.RouteData.Values["action"]@Html.Raw(pageLink)@(Model.Prefix).Page=@(i+1)" style="text-decoration:none; font-weight:@(Model.Page == (i+1) ? "bold" : "normal")">@(i + 1)</a>
+        </li>
+    }
+</ul>
+<script>
+    function ddlItemsPerPage_OnChange() {
+        @{
+            string itemsPerPageLink = "?";
+            for (int i = 0; i < this.Request.QueryString.Count; i++)
+            {
+                if (!this.Request.QueryString.GetKey(i).StartsWith(Model.Prefix))
+                {
+                    itemsPerPageLink += this.Request.QueryString.GetKey(i) + "=" + Url.Encode(this.Request.QueryString[i]) + "&";
+                }
+            }
+        }
+
+        var link = "/@this.ViewContext.RouteData.Values["controller"]/@this.ViewContext.RouteData.Values["action"]@Html.Raw(itemsPerPageLink)" + "@(Model.Prefix).ItemsPerPage=" + $("#ddlItemsPerPage").val();
+
+        window.location.href = link;
+    }
+</script>
+<select id="ddlItemsPerPage" onchange="ddlItemsPerPage_OnChange();">
+    <option value="5" @(Model.ItemsPerPage == 5 ? "selected" : "")>5</option>
+    <option value="10" @(Model.ItemsPerPage == 10 ? "selected" : "")>10</option>
+    <option value="50" @(Model.ItemsPerPage == 50 ? "selected" : "")>50</option>
+    <option value="100" @(Model.ItemsPerPage == 100 ? "selected" : "")>100</option>
+</select>

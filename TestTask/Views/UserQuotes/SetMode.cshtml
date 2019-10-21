@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Set Mode";
+}
+
+
+
+@using (Html.BeginForm("SetMode", "UserQuotes", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+   
+        <h2>Set Mode</h2>
+        @Html.ValidationMessage("authenticationFailed", new { style = "color: red;" })
+        
+               <p><input type="radio" name="GameMode" value="Binary" @(Session["GameMode"].ToString()=="Binary"?"checked":"") />Binary</p>
+               <p><input type="radio" name="GameMode" value=" Multiple choice questions " @(Session["GameMode"].ToString() == " Multiple choice questions "?"checked":"") />Multiple choice questions</p>
+                <p ><input type="submit" value="Save"/></p>
+    
+}

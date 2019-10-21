@@ -1,0 +1,70 @@
+﻿@model TestTask.ViewModels.Quotes.EditVM
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "Quotes", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => model.Id);
+<fieldset>
+    <legend>Edit Activity</legend>
+    @Html.ValidationMessage("", new { style = "color: red;" })
+
+    <table>
+        <tr>
+            <td>@Html.LabelFor(model => model.Text)</td>
+            <td>@Html.TextAreaFor(model => model.Text, new { style = "width:200px;height:100px" }) @Html.ValidationMessageFor(model => model.Text)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.AuthorId)</td>
+            <td> @Html.DropDownListFor(model => model.AuthorId, new SelectList(Model.AuthorsList, "Value", "Text"), "-Select Author-")</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.NewAuthor)</td>
+            <td>@Html.TextBoxFor(model => model.NewAuthor) @Html.ValidationMessageFor(model => model.NewAuthor)</td>
+        </tr>
+             <tr>
+                 <td colspan="2">@Html.HiddenFor(model=>model.AuthorName,new { @id="authorname"})</td>
+             </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit" value="Save" />&nbsp;<a href="@Url.Action("Index", "Quotes")">Cancel</a></td>
+
+        </tr>
+    </table>
+</fieldset>
+}
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#AuthorId").change(function () {
+
+            console.log("hi");
+            
+            $("#authorname").val(this.options[this.selectedIndex].text);
+            $("#NewAuthor").val("");
+
+        });
+
+        $("#NewAuthor").change(function () {
+            console.log("am here");
+            
+                $("#authorname").val($("#NewAuthor").val());
+                $("#AuthorId").val("");
+          
+
+        });
+
+    });
+    
+
+</script>
+
+

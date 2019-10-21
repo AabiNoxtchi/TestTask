@@ -1,0 +1,79 @@
+﻿@model TestTask.ViewModels.UserQuotes.PlayVM
+@{
+    ViewBag.Title = "Play";
+}
+
+<section class="game">
+
+    <p>Who Said it?</p>
+
+    <div class="pink_box">
+        <blockquote>
+            " @Model.quote.Text "
+        </blockquote>
+    </div>
+
+   
+    @if (!String.IsNullOrEmpty(Model.msg))
+    {
+    <div class="modal">
+        <p id="Details"> @Model.msg </p>
+
+        <div class="centered">
+            <button class="btn" onclick="NextButton_OnClick();">Next</button>
+        </div>
+    </div>
+    }
+    else
+    {
+    <div class="quoteOptions">
+         @if (Session["GameMode"].ToString() == " Multiple choice questions ")
+        {
+
+            <p><button class="options" value="@Model.authors[0].Name"> -> @Model.authors[0].Name</button></p>
+            <p><button class="options" value="@Model.authors[1].Name"> -> @Model.authors[1].Name</button></p>
+            <p><button class="options" value="@Model.authors[2].Name"> -> @Model.authors[2].Name</button></p>
+        }
+        else
+        {
+            <p>@Model.authors[0].Name?</p>
+
+            <div class="binary_options">
+                <button id="Yesbtn" value="Yes">Yes</button>
+                <button id="Nobtn" value="No">No</button>
+            </div>
+        }
+       
+    </div>
+    }
+</section>
+
+
+
+<script type="text/javascript">
+
+        var correctAnswer;
+    $(document).ready(function () {
+
+            $(".options , #Yesbtn , #Nobtn").click(function () {
+                var selectedAnswer = $(this).val();
+                var text = "EditChildEntity";
+                var link = "/@this.ViewContext.RouteData.Values["controller"]/" + text + "?model.quote.Id=@(Model.quote.Id)&model.UserQuotesEditVm.SelectedAnswer=" + selectedAnswer+"&model.authors[0].Name=@Model.authors[0].Name";
+                window.location.href = link;
+
+            });
+        });
+
+
+        function NextButton_OnClick() {
+
+            var text = "Play";
+
+            var link = "/@this.ViewContext.RouteData.Values["controller"]/" + text;
+
+            window.location.href = link;
+
+        }
+
+</script>
+
