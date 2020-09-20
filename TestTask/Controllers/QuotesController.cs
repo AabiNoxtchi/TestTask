@@ -44,7 +44,6 @@ namespace TestTask.Controllers
             if ((model.AuthorId != null && model.NewAuthor != null) || (model.AuthorId == null && model.NewAuthor == null))
             {
                 valid = false;
-                PopulateEditGetModel(model);
                 ModelState.AddModelError("", "You have to choose either an existing author from the list or add anew one !");
 
             }
@@ -62,7 +61,7 @@ namespace TestTask.Controllers
 
             List<SelectListItem> AuthorslistItems = PopulateSelectList();
 
-            model.AuthorsList = new SelectList(AuthorslistItems, "Value", "Text",model.AuthorId!=null?model.AuthorId.ToString():null);
+            model.AuthorsList = new SelectList(AuthorslistItems, "Value", "Text",model.AuthorId);
         }
 
         protected override void PopulateEditPostModel(EditVM model)

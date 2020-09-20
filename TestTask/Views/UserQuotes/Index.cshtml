@@ -5,12 +5,26 @@
 
 <h3>User Games</h3>
 <br />
+
+@{
+    string orderByPageLink = "?";
+    for (int i = 0; i < this.Request.QueryString.Count; i++)
+    {
+        if (!this.Request.QueryString.GetKey(i).StartsWith(Model.OrderBy.Prefix))
+        {
+            orderByPageLink += this.Request.QueryString.GetKey(i) + "=" + Url.Encode(this.Request.QueryString[i]) + "&";
+        }
+    }
+}
+
 @{ Html.RenderPartial("/Views/Shared/IndexFilterPartial.cshtml", Model.Filter); }
-<table>
+<table>  
     <tr>
-        <td><a href="@Url.Action("Index")?OrderBy.UserName=userName">User Name</a></td>
-        <td><a href="@Url.Action("Index")?OrderBy.QuoteText=text">Quote</a></td>
-        <td><a href="@Url.Action("Index")?OrderBy.Score=score">Score</a></td>
+
+        @* <td><a href="" onclick="orderByLink_OnClick">User Name</a></td>*@
+        <td><a href="@Url.Action("Index")@(orderByPageLink)OrderBy.UserName=userName">User Name</a></td>
+        <td><a href="@Url.Action("Index")@(orderByPageLink)OrderBy.QuoteText=text">Quote</a></td>
+        <td><a href="@Url.Action("Index")@(orderByPageLink)OrderBy.Score=score">Score</a></td>
     </tr>
     @foreach (DataAccess.Entity.UserQuote item in Model.Items)
     {
@@ -22,5 +36,7 @@
     }
 
 </table>
+
+
 @{ Html.RenderPartial("/Views/Shared/PagerPartial.cshtml", Model.Pager); }
 

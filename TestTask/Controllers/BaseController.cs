@@ -49,6 +49,7 @@ namespace TestTask.Controllers
 
 
             model.OrderBy = model.OrderBy ?? new OrderBy();
+            model.OrderBy.Prefix = "OrderBy";
             Func<IQueryable<E>, IOrderedQueryable<E>> orderBy = model.OrderBy.orderBy();
             R repo = new R();
             model.Items = repo.GetAll(filter, model.Pager.Page, model.Pager.ItemsPerPage, orderBy,model.ChildElement);
@@ -105,6 +106,7 @@ namespace TestTask.Controllers
 
             if (!ModelState.IsValid || !valid)
             {
+                PopulateEditGetModel(model);
                 return View(model);
             }
 

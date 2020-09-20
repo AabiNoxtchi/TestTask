@@ -19,7 +19,7 @@
         <tr style="color:aquamarine">
             
             <td>@item.UserName</td>
-            <td><a href="@Url.Action("Index","UserQuotes")?FilterVM.UserId=item.Id">User Games</a></td>
+            <td><a href="@Url.Action("Index","UserQuotes")?Filter.UserId=@item.Id">User Games</a></td>
             <td><a href="@Url.Action("Edit", "Users", new { Id = item.Id })">edit</a></td>
             <td><a href="@Url.Action("Delete", "Users", new { Id = item.Id })">delete</a></td>
         </tr>
